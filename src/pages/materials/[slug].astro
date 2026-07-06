@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TechLogo from '../../components/TechLogo.astro';
+import { categories } from '../../data/materials';
+
+export function getStaticPaths() {
+  return categories.flatMap((cat) =>
+    cat.tools.map((tool) => ({
+      params: { slug: tool.slug },
+      props: { tool, categoryLabel: cat.label },
+    }))
+  );
+}
+
+const { tool, categoryLabel } = Astro.props;
+const isCloud = categoryLabel === 'Cloud Platforms';
+const isKubernetes = tool.slug === 'kubernetes';
+---
+
+<Layout title={`${tool.name} | Materials | DevBuddy`} description={tool.desc}>
+  <div class="max-w-3xl mx-auto px-6 pt-14 pb-24 fade-up">
+    <a href="/materials" class="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted hover:text-accent transition-colors">
+      <span aria-hidden="true">&larr;</span> materials
+    </a>
+
+    <div class="flex items-start gap-4 mt-6">
+      <TechLogo name={tool.logo} class="h-16 w-16 shrink-0" />
+      <div class="min-w-0">
+        <p class="font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint">{categoryLabel}</p>
+        <h1 class="font-sans text-3xl sm:text-4xl font-black tracking-[-0.03em] text-ink">{tool.name}</h1>
+      </div>
+    </div>
+    <p class="mt-4 text-muted leading-relaxed max-w-xl">{tool.desc}</p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
+        <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">Key concepts</p>
+        <ul class="space-y-1.5">
+          {tool.concepts.map((c: string) => (
+            <li class="text-sm text-muted leading-relaxed flex gap-2">
+              <span style="color:var(--color-tools)">&bull;</span> {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
+        <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">Common commands</p>
+        <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto leading-relaxed">{tool.commands.join('\n')}</pre>
+      </div>
+    </div>
+
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-10 mb-4">
+      <span class="text-muted">//</span> installation
+    </p>
+    <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
+      <dl class="space-y-4">
+        {tool.install.map((step: { platform: string; command: string }) => (
+          <div>
+            <dt class="font-mono text-[10px] font-semibold tracking-[0.1em] uppercase text-faint mb-1.5">{step.platform}</dt>
+            <dd class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto whitespace-pre leading-relaxed">{step.command}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-12 mb-4">
+      <span class="text-muted">//</span> services &amp; components ({tool.services.reduce((n: number, g: { items: unknown[] }) => n + g.items.length, 0)})
+    </p>
+    {isKubernetes && <p class="text-sm text-muted mb-6">Click any card for a usage example.</p>}
+
+    <div class="space-y-10">
+      {tool.services.map((group: { label: string; items: { name: string; desc: string; example: string }[] }) => (
+        <div>
+          <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">{group.label}</p>
+          <ul class="grid gap-3 sm:grid-cols-2">
+            {group.items.map((s) => (
+              isKubernetes ? (
+                <li>
+                  <details class="group rounded-xl border border-line bg-surface open:border-[var(--color-tools)] transition-colors">
+                    <summary class="list-none cursor-pointer p-4 flex items-start justify-between gap-2">
+                      <div class="min-w-0">
+                        <span class="font-bold text-sm text-ink">{s.name}</span>
+                        <p class="text-sm text-muted mt-1 leading-relaxed">{s.desc}</p>
+                      </div>
+                      <span class="shrink-0 mt-0.5 text-faint transition-transform group-open:rotate-45 font-mono text-lg leading-none">+</span>
+                    </summary>
+                    <div class="px-4 pb-4">
+                      <p class="font-mono text-[10px] font-semibold tracking-[0.1em] uppercase text-faint mb-1.5">Example</p>
+                      <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto whitespace-pre leading-relaxed">{s.example}</pre>
+                    </div>
+                  </details>
+                </li>
+              ) : (
+                <li class="rounded-xl border border-line bg-surface p-4">
+                  <span class="font-bold text-sm text-ink">{s.name}</span>
+                  <p class="text-sm text-muted mt-1 leading-relaxed">{s.desc}</p>
+                </li>
+              )
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    {!isCloud && !isKubernetes && (
+      <>
+        <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-12 mb-4">
+          <span class="text-muted">//</span> command reference
+        </p>
+        <div class="space-y-6">
+          {tool.services.map((group: { label: string; items: { name: string; desc: string; example: string }[] }) => (
+            <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
+              <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">{group.label}</p>
+              <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto whitespace-pre leading-relaxed">{group.items.map((s) => `# ${s.name}\n${s.example}`).join('\n\n')}</pre>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+</Layout>

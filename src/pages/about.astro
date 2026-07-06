@@ -1,0 +1,235 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import TechLogo from '../components/TechLogo.astro';
+
+const roleLine = [
+  'Cloud Architect', 'Multi Cloud', 'DevOps', 'DevSecOps', 'IaC', 'GitOps',
+  'Observability', 'Cloud Security', 'AI Enthusiast',
+];
+
+const skills = [
+  'AWS', 'Azure', 'Oracle Cloud Infrastructure', 'Terraform', 'Kubernetes', 'Helm charts',
+  'Serverless framework', 'Event Driven Architectures', 'DevOps', 'DevSecOps', 'Python',
+  'Shell Script', 'PowerShell', 'Groovy',
+];
+
+const skillLogos: Record<string, string> = {
+  AWS: 'aws',
+  Azure: 'azure',
+  'Oracle Cloud Infrastructure': 'oci',
+  Terraform: 'terraform',
+  Kubernetes: 'kubernetes',
+  'Helm charts': 'helm',
+  'Serverless framework': 'serverless',
+  'Event Driven Architectures': 'eda',
+  DevOps: 'devops',
+  DevSecOps: 'devsecops',
+  Python: 'python',
+  'Shell Script': 'shell',
+  PowerShell: 'powershell',
+  Groovy: 'groovy',
+};
+
+const focusAreas = [
+  'Cloud-Native Architecture', 'Kubernetes Platforms', 'Infrastructure as Code',
+  'CI/CD Automation', 'Platform Reliability', 'Security', 'GitOps', 'DevSecOps',
+];
+
+const contacts = [
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/kalijavedubhanu', icon: 'linkedin', mail: false },
+  { name: 'GitHub', href: 'https://github.com/bhanu08502', icon: 'github', mail: false },
+  { name: 'Email', href: 'mailto:bhanu08502@gmail.com', icon: 'mail', mail: true },
+];
+
+const workHistory = [
+  {
+    org: 'Siemens', location: 'Bangalore, India', title: 'Cloud Architect', period: '2023 — Current', current: true,
+    points: [
+      'Led cloud architecture initiatives.',
+      'Implemented DevOps automation and CI/CD workflows.',
+      'Delivered observability solutions for application and infrastructure monitoring.',
+      'Strengthened cloud security controls and compliance posture.',
+      'Implemented GitOps practices for deployment consistency.',
+    ],
+  },
+  {
+    org: 'Searce Inc.', location: 'Hyderabad, India', title: 'Lead Cloud Architect', period: 'Jul 2021 — Jul 2023',
+    points: [
+      'Designed cloud-native architectures spanning IaaS, PaaS, containers, microservices, and event-driven systems.',
+      'Migrated on-prem Windows applications to the cloud.',
+      'Automated end-to-end infrastructure delivery with Terraform, CI/CD pipelines, and Helm-based Kubernetes deployments.',
+      'Delivered serverless and container workloads to production on EKS, ECS, and Beanstalk with integrated monitoring.',
+    ],
+  },
+  {
+    org: 'GapInc', location: 'Hyderabad, India', title: 'Sr. Cloud & DevOps Engineer', period: 'Jul 2019 — Jul 2021',
+    points: [
+      'Created and managed Oracle Cloud Infrastructure and Azure resources via Terraform modules.',
+      'Built Jenkins pipelines to deploy Terraform modules, including Seed Job DSL and shared libraries for reuse.',
+      'Implemented ARM templates for Azure resource provisioning.',
+      'Built a PHP-based scheduler to optimize OCI instance and DB cost.',
+      'Configured Jenkins master/slave architecture with dynamic slaves.',
+    ],
+  },
+  {
+    org: 'Innominds Software Pvt Ltd', location: 'Hyderabad, India', title: 'Sr. Cloud & DevOps Engineer', period: 'Aug 2018 — Jul 2019',
+    points: [
+      'Created and managed AWS infrastructure, automating provisioning with Terraform.',
+      'Deployed Terraform scripts via GitLab CI.',
+      'Monitored cloud infrastructure using CloudWatch, Grafana, and Datadog.',
+      'Automated IAM and SSL certificate expiry checks with Slack notifications.',
+    ],
+  },
+  {
+    org: 'CA Technologies', location: 'Hyderabad, India', title: 'Sr Application Developer', period: 'Jan 2015 — Aug 2018',
+    points: [
+      'Automated migration of 110GB of file-system data to Office 365 with metadata intact.',
+      'Built SharePoint Provider and SharePoint-hosted apps.',
+      'Created page layouts using SharePoint Designer.',
+    ],
+  },
+  {
+    org: 'Katpro Technologies', location: 'Bangalore, India', title: 'Software Engineer', period: 'Sep 2013 — Jan 2015',
+    points: [
+      'Built SharePoint web applications and site collections.',
+      'Developed custom web parts and jQuery-based event calendar reports.',
+      'Worked on master page development.',
+    ],
+  },
+  {
+    org: 'Srikari Impetus Solutions', location: 'Hyderabad, India', title: 'Associate Software Engineer', period: 'Jun 2012 — Sep 2013',
+    points: [
+      'Created sites, site collections, document libraries, and custom lists.',
+      'Built survey list workflows and timer jobs to trigger them.',
+      'Worked on event receivers for content-type association.',
+    ],
+  },
+];
+---
+
+<Layout title="About | DevBuddy" description="Cloud & DevOps Architect focused on cloud architecture, DevOps, and Kubernetes.">
+  <div class="max-w-5xl mx-auto px-6 pt-14 pb-20 fade-up">
+    <!-- Hero -->
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+      <div class="min-w-0">
+        <p class="text-2xl font-semibold text-muted">Hi, I'm</p>
+        <h1 class="font-sans text-6xl sm:text-7xl font-black tracking-[-0.04em] leading-[0.9]" style="background:linear-gradient(95deg, var(--color-tools), var(--color-about)); -webkit-background-clip:text; background-clip:text; color:transparent">
+          Bhanu
+        </h1>
+        <p class="mt-4 text-base sm:text-lg font-semibold text-muted leading-relaxed">
+          {roleLine.join(' | ')}
+        </p>
+
+        <p class="mt-5 text-muted leading-relaxed max-w-md">
+          I design, automate, and optimize cloud-native infrastructure that powers scalable, secure,
+          high-performing applications &mdash; multi-cloud Kubernetes, secure pipelines, and the
+          automation that kills the toil.
+        </p>
+
+        <!-- connect -->
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="mailto:bhanu08502@gmail.com" class="btn-lift inline-flex items-center gap-2 rounded-full bg-ink text-bg font-bold text-sm px-6 py-3">
+            Email Me <span aria-hidden="true">&rarr;</span>
+          </a>
+          <div class="flex items-center gap-2">
+            {contacts.map((c) => (
+              <a
+                href={c.href}
+                target={c.mail ? undefined : '_blank'}
+                rel={c.mail ? undefined : 'noopener noreferrer'}
+                aria-label={c.name}
+                class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-line text-muted hover:text-ink hover:border-ink/40 transition-colors"
+              >
+                <Icon name={c.icon} class="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- terminal -->
+      <div class="glow-panel themed min-w-0 rounded-2xl border-2 border-line bg-surface overflow-hidden" style="--glow:var(--color-about)">
+        <div class="flex items-center gap-3 border-b-2 border-line px-4 py-2.5">
+          <span class="flex gap-1.5">
+            <span class="h-3 w-3 rounded-full" style="background:var(--color-accent)"></span>
+            <span class="h-3 w-3 rounded-full" style="background:var(--color-topics)"></span>
+            <span class="h-3 w-3 rounded-full" style="background:var(--color-about)"></span>
+          </span>
+          <span class="font-mono text-xs text-muted">zsh</span>
+        </div>
+        <div class="relative z-10 font-mono text-[13px] leading-relaxed p-5 overflow-x-auto">
+          <p><span style="color:var(--color-topics)">bhanu</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> whoami</p>
+          <p class="text-ink mt-1">Cloud Architect</p>
+
+          <p class="mt-3"><span style="color:var(--color-topics)">bhanu</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> cat clouds.txt</p>
+          <p class="text-ink mt-1">AWS &middot; Azure &middot; GCP &middot; OCI</p>
+
+          <p class="mt-3"><span style="color:var(--color-topics)">bhanu</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> cat focus.txt</p>
+          <p class="text-ink mt-1">DevOps &middot; DevSecOps &middot; IaC &middot; GitOps</p>
+          <p class="text-ink">Observability &middot; AI</p>
+
+          <p class="mt-3"><span style="color:var(--color-topics)">bhanu</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> echo $MISSION</p>
+          <p class="text-ink mt-1">
+            "Automate everything"<span class="cursor-blink ml-0.5 inline-block h-[1em] w-[7px] align-[-3px]" style="background:var(--color-ink)"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-14 mb-4">
+      <span class="text-muted">//</span> skills
+    </p>
+    <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-4">
+      {skills.map((skill) => (
+        <span title={skill} class="flex flex-col items-center gap-1.5">
+          <TechLogo name={skillLogos[skill]} class="h-14 w-14" />
+          <span class="text-[10px] text-muted text-center leading-tight">{skill}</span>
+        </span>
+      ))}
+    </div>
+
+    <!-- Focus Areas -->
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-12 mb-4">
+      <Icon name="target" class="h-4 w-4" style="color:var(--color-about)" /> Focus Areas
+    </p>
+    <div class="flex flex-wrap gap-2">
+      {focusAreas.map((f) => (
+        <span class="font-mono text-[11px] font-medium text-muted border border-line rounded-md px-2.5 py-1 hover:border-[var(--color-about)] hover:text-ink transition-colors">{f}</span>
+      ))}
+    </div>
+
+    <!-- Work History (full width) -->
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-14 mb-6">
+      <Icon name="briefcase" class="h-4 w-4" style="color:var(--color-about)" /> Work History
+    </p>
+    <ol class="relative border-l-2 border-line ml-3 space-y-10">
+      {workHistory.map((role) => (
+        <li class="relative pl-8">
+          <span
+            class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-2"
+            style={`background:var(--color-bg); border-color:${role.current ? 'var(--color-about)' : 'var(--color-line)'}`}
+          ></span>
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 class="font-extrabold text-lg text-ink">{role.title}</h3>
+              <p class="font-mono text-[11px] text-faint mt-1">{role.org} · {role.location}</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              {role.current && (
+                <span class="font-mono text-[10px] font-semibold uppercase tracking-wide rounded-full px-2 py-0.5" style="color:var(--color-about); background:color-mix(in srgb, var(--color-about) 14%, transparent)">Current</span>
+              )}
+              <p class="font-mono text-[11px] text-muted">{role.period}</p>
+            </div>
+          </div>
+          <ul class="mt-3 space-y-2 list-disc pl-5 text-sm text-muted leading-relaxed">
+            {role.points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Layout>

@@ -1,0 +1,26 @@
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Toggle color theme"
+  class="relative h-9 w-9 flex items-center justify-center rounded-lg border border-line text-muted hover:text-ink hover:border-ink/30 transition-colors"
+>
+  {/* sun (shown in dark mode, click to go light) */}
+  <svg id="icon-sun" class="hidden h-4 w-4 dark:block" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="4.5" />
+    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round" />
+  </svg>
+  {/* moon (shown in light mode, click to go dark) */}
+  <svg id="icon-moon" class="block h-4 w-4 dark:hidden" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5Z" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</button>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+</script>

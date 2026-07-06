@@ -1,12 +1,152 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+
+const stack = [
+  { name: 'AWS', icon: 'cloud' },
+  { name: 'Azure', icon: 'cloud' },
+  { name: 'GCP', icon: 'cloud' },
+  { name: 'OCI', icon: 'cloud' },
+  { name: 'Kubernetes', icon: 'hexagon' },
+  { name: 'Terraform', icon: 'layers' },
+  { name: 'CI/CD', icon: 'refresh' },
+  { name: 'GitOps', icon: 'git-branch' },
+  { name: 'DevSecOps', icon: 'shield' },
+];
+
+const sections = [
+  {
+    href: '/about',
+    label: 'About',
+    grad: 'linear-gradient(140deg, #3d7fbb, #244f78)',
+    cmd: 'cat about.md',
+    description: 'Career, role, and focus areas',
+    icon: 'M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2.25c-4.14 0-7.5 2.35-7.5 5.25v1.5h15v-1.5c0-2.9-3.36-5.25-7.5-5.25Z',
+  },
+  {
+    href: 'https://www.linkedin.com/in/kalijavedubhanu',
+    label: 'LinkedIn',
+    grad: 'linear-gradient(140deg, #0077b5, #005582)',
+    cmd: 'open linkedin',
+    description: 'View my LinkedIn profile and activity',
+    icon: 'M4 4h16v16H4V4Zm4.5 3.75h-2.25V16.5H8.5V7.75H6.25V6.25h2.25c1.24 0 1.75.82 1.75 1.75V8H11l.25-1.5H9.25V6.5c0-.22.06-.37.37-.37h1.12V4.5h-1.5C8.18 4.5 7.5 5.18 7.5 6.25v1.5H6.25V8h1.25V16.5h1.5V8h1.25v1.25h.03c.22-.4.7-.75 1.45-.75 1.5 0 1.75.99 1.75 2.28V16.5h1.5V9.75c0-1.95-.75-3-2.75-3-.93 0-1.62.5-1.88.93h-.03V6.5Z',
+  },
+];
+
+const contacts = [
+  { name: 'GitHub', handle: 'bhanu08502', href: 'https://github.com/bhanu08502', icon: 'github' },
+  { name: 'LinkedIn', handle: 'in/kalijavedubhanu', href: 'https://www.linkedin.com/in/kalijavedubhanu', icon: 'linkedin' },
+  { name: 'Email', handle: 'bhanu08502@gmail.com', href: 'mailto:bhanu08502@gmail.com', icon: 'mail' },
+];
+
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DevBuddy</title>
-  </head>
-  <body>
-    <h1>DevBuddy</h1>
-  </body>
-</html>
+
+<Layout>
+  <section class="max-w-3xl mx-auto px-6 pt-14 fade-up">
+    <div class="glow-panel themed rounded-2xl border-2 border-line bg-surface p-8 sm:p-12 flex flex-col gap-6" style="--glow:var(--color-accent)">
+      <div class="relative z-10 font-mono text-[13px] leading-relaxed">
+        <p class="text-muted">
+          <span style="color:var(--color-topics)">devbuddy</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> whoami
+        </p>
+        <p class="text-ink mt-1">
+          Cloud &amp; DevOps Architect &middot; Delivery-focused<span class="cursor-blink ml-0.5 inline-block h-[1em] w-[7px] align-[-2px]" style="background:var(--color-accent)"></span>
+        </p>
+      </div>
+
+      <h1 class="relative z-10 font-sans text-4xl sm:text-5xl font-black tracking-[-0.03em] leading-[1.02] max-w-xl text-gradient">
+        Building infrastructure that doesn't fall over.
+      </h1>
+
+      <p class="relative z-10 text-muted leading-relaxed max-w-lg">
+        I design and deliver scalable, secure, highly available cloud solutions across AWS, Azure,
+        GCP, and OCI &mdash; modernizing infrastructure through cloud-native architecture,
+        Kubernetes, and DevOps transformation.
+      </p>
+
+      <div class="relative z-10 flex flex-wrap gap-3 mt-1">
+        <a href="https://www.linkedin.com/in/kalijavedubhanu" target="_blank" rel="noopener noreferrer" class="btn-lift rounded-[10px] bg-accent text-white font-semibold text-sm px-6 py-3">
+          View LinkedIn
+        </a>
+        <a href="#contact" class="btn-lift rounded-[10px] border-2 border-line text-ink font-semibold text-sm px-6 py-3 hover:border-ink/40">
+          Get in touch
+        </a>
+      </div>
+    </div>
+
+    <p class="font-mono text-[11px] text-faint mt-6 mb-2">
+      <span class="text-muted">$</span> stack <span class="text-faint">--list</span>
+    </p>
+    <div class="flex flex-wrap gap-2">
+      {stack.map((s) => (
+        <span class="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium text-muted border border-line rounded-md px-2.5 py-1 hover:border-accent/50 hover:text-ink transition-colors">
+          <Icon name={s.icon} class="h-3.5 w-3.5" />
+          {s.name}
+        </span>
+      ))}
+    </div>
+  </section>
+
+  {/* Index / directory of the site */}
+  <section class="max-w-3xl mx-auto px-6 pt-16">
+    <p class="font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-5">
+      <span class="text-muted">//</span> index
+    </p>
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {sections.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            target={s.href.startsWith('http') ? '_blank' : undefined}
+            rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            class="tile group relative flex h-full min-h-[190px] flex-col justify-between overflow-hidden rounded-2xl p-6 text-white"
+            style={`background:${s.grad}`}
+          >
+            <span class="pointer-events-none absolute inset-0" style="background:radial-gradient(120% 120% at 85% 0%, rgba(255,255,255,0.22), transparent 55%)"></span>
+            <div class="relative z-10 flex items-start justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/20">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+                  <path d={s.icon} stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <svg class="h-5 w-5 text-white/70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="relative z-10">
+              <span class="font-extrabold text-2xl tracking-tight">{s.label}</span>
+              <p class="font-mono text-[11px] text-white/70 mt-1">$ {s.cmd}</p>
+              <p class="text-sm text-white/85 leading-relaxed mt-2.5">{s.description}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="contact" class="max-w-3xl mx-auto px-6 pt-16 pb-24 scroll-mt-24">
+    <p class="font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-5">
+      <span class="text-muted">//</span> contact
+    </p>
+    <ul class="grid gap-4 sm:grid-cols-3">
+      {contacts.map((c) => (
+        <li>
+          <a
+            href={c.href}
+            target={c.icon === 'mail' ? undefined : '_blank'}
+            rel={c.icon === 'mail' ? undefined : 'noopener noreferrer'}
+            class="card-lift themed group flex h-full flex-col gap-3 rounded-2xl border-2 border-line bg-surface p-5"
+            style="--glow:var(--color-accent)"
+          >
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl text-ink" style="background:color-mix(in srgb, var(--color-accent) 14%, transparent)">
+              <Icon name={c.icon} class="h-5 w-5" />
+            </span>
+            <div>
+              <span class="font-extrabold text-ink group-hover:text-accent transition-colors">{c.name}</span>
+              <p class="font-mono text-[11px] text-muted mt-0.5 break-all">{c.handle}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

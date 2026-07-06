@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+
+const socials = [
+  { name: 'GitHub', href: 'https://github.com/bhanu08502', icon: 'github' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/kalijavedubhanu', icon: 'linkedin' },
+  { name: 'Email', href: 'mailto:bhanu08502@gmail.com', icon: 'mail' },
+];
+---
+
+<footer class="border-t-2 border-line mt-8">
+  <div class="max-w-3xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+    <p class="font-mono">
+      <span class="text-faint">$</span> echo <span class="text-ink">"devbuddy &copy; {year}"</span>
+    </p>
+    <div class="flex items-center gap-4">
+      <span class="font-mono text-faint hidden sm:inline">Cloud &middot; DevOps &middot; AI</span>
+      <ul class="flex items-center gap-2">
+        {socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target={s.icon === 'mail' ? undefined : '_blank'}
+              rel={s.icon === 'mail' ? undefined : 'noopener noreferrer'}
+              aria-label={s.name}
+              class="flex h-9 w-9 items-center justify-center rounded-lg border-2 border-line text-muted hover:text-ink hover:border-ink/40 transition-colors"
+            >
+              <Icon name={s.icon} class="h-4 w-4" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>

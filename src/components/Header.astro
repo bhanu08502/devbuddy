@@ -1,0 +1,91 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navItems = [
+  { href: '/about', label: 'About', color: 'var(--color-about)' },
+  { href: '/blog', label: 'Blog', color: 'var(--color-blog)' },
+  { href: '/materials', label: 'Materials', color: 'var(--color-tools)' },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b-2 border-line bg-bg/85 backdrop-blur-md">
+  <nav class="max-w-3xl mx-auto flex items-center justify-between px-6 py-4">
+    <a href="/" class="group flex items-center gap-2 font-mono font-bold tracking-tight text-ink">
+      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-accent/15 text-accent text-sm">&gt;_</span>
+      <span>devbuddy</span>
+    </a>
+
+    <div class="flex items-center gap-3">
+      <ul class="hidden sm:flex items-center gap-6 text-sm">
+        {navItems.map((item) => {
+          const active = currentPath.startsWith(item.href);
+          return (
+            <li>
+              <a
+                href={item.href}
+                class={`relative font-semibold transition-colors ${active ? '' : 'text-muted hover:text-ink'}`}
+                style={active ? `color:${item.color}` : undefined}
+              >
+                {item.label}
+                {active && (
+                  <span class="absolute -bottom-[17px] left-0 right-0 h-[2px] rounded-full" style={`background:${item.color}`} />
+                )}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+
+      <ThemeToggle />
+
+      <button
+        id="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="sm:hidden relative h-9 w-9 flex items-center justify-center rounded-lg border border-line text-ink hover:border-ink/30 transition-colors"
+      >
+        <span class="sr-only">Toggle menu</span>
+        <svg id="icon-open" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <svg id="icon-close" class="hidden h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <ul id="mobile-nav" class="hidden sm:hidden flex-col border-t border-line px-6 py-2">
+    {navItems.map((item) => {
+      const active = currentPath.startsWith(item.href);
+      return (
+        <li>
+          <a
+            href={item.href}
+            class={`block py-3 font-semibold transition-colors ${active ? '' : 'text-muted hover:text-ink'}`}
+            style={active ? `color:${item.color}` : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-nav');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('flex');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!!isOpen));
+  });
+</script>

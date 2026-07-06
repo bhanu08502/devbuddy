@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const posts = [
+  {
+    title: 'AWS MSK Explained: How Messages Are Distributed and Replicated Across Brokers',
+    date: 'Jul 2026',
+    href: 'https://www.linkedin.com/in/kalijavedubhanu',
+    image: '/blog/aws-msk-partitions.png',
+    body: `Ever wondered how AWS MSK (Managed Streaming for Apache Kafka) handles millions of messages reliably and at scale?
+
+Here's the flow:
+
+📤 1. Producer Sends Messages
+Applications publish messages to a Kafka topic.
+
+📦 2. Topic is Split into Partitions
+A topic is divided into multiple partitions (P0, P1, P2, P3…).
+
+Kafka decides the target partition:
+✅ Key-based partitioning → Same key always goes to the same partition.
+✅ Round-robin → Even distribution when no key is provided.
+
+Example:
+- Order 101 (Key=A) → P0
+- Order 102 (Key=B) → P2
+- Order 104 (Key=A) → P0
+
+This ensures message ordering for the same key.
+
+🔄 3. Replication for High Availability
+Each partition is replicated across multiple brokers.
+
+Example (Replication Factor = 3):
+- Broker 1 → Leader
+- Broker 2 → Follower
+- Broker 3 → Follower
+
+Producers write to the Leader, and followers continuously replicate data.
+
+⚡ 4. Automatic Failover
+If the leader broker fails, one of the in-sync followers is automatically promoted as the new leader.
+
+Result:
+✔ No downtime
+✔ High availability
+✔ Fault tolerance
+
+📥 5. Consumers Read from Partitions
+Consumer groups process messages in parallel by reading from assigned partitions.
+
+Key Takeaways
+🔹 Partitions provide scalability and parallelism
+🔹 Keys determine message distribution
+🔹 Replication ensures durability and fault tolerance
+🔹 Ordering is guaranteed within a partition
+🔹 Consumer groups enable parallel processing
+
+#AWS #AmazonMSK #ApacheKafka #EventDrivenArchitecture #StreamingData #CloudComputing #Microservices #DistributedSystems #BigData #DataEngineering #Kafka #AWSArchitecture #TechExplained #CloudArchitecture #SystemDesign`,
+  },
+];
+---
+
+<Layout title="Blog | DevBuddy" description="Notes on cloud architecture, DevOps, and platform engineering.">
+  <div class="max-w-3xl mx-auto px-6 pt-14 pb-24 fade-up">
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-2">
+      <span class="text-muted">//</span> blog
+    </p>
+    <h1 class="font-sans text-4xl sm:text-5xl font-black tracking-[-0.03em]" style="background:linear-gradient(95deg, var(--color-blog), var(--color-about)); -webkit-background-clip:text; background-clip:text; color:transparent">
+      Notes &amp; writeups
+    </h1>
+    <p class="mt-4 text-muted leading-relaxed max-w-lg">
+      Cloud architecture, DevOps, and platform engineering — things I've shared on LinkedIn, collected here.
+    </p>
+
+    <ul class="mt-10 space-y-8">
+      {posts.map((post) => (
+        <li class="card-lift themed rounded-2xl border-2 border-line bg-surface overflow-hidden" style="--glow:var(--color-blog)">
+          {post.image && (
+            <img src={post.image} alt={post.title} class="w-full h-auto border-b-2 border-line" loading="lazy" />
+          )}
+          <div class="p-6">
+            <h2 class="font-extrabold text-lg text-ink">{post.title}</h2>
+            <p class="font-mono text-[11px] text-muted mt-2">{post.date}</p>
+            <p class="text-sm text-muted mt-4 leading-relaxed whitespace-pre-line">{post.body}</p>
+            <a href={post.href} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-4 font-mono text-[11px] text-muted hover:text-accent transition-colors">
+              view on linkedin <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>

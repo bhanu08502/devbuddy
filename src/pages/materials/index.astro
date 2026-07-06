@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TechLogo from '../../components/TechLogo.astro';
+import { categories } from '../../data/materials';
+---
+
+<Layout title="Materials | DevBuddy" description="Reference notes on the cloud and DevOps tools I use day to day.">
+  <div class="max-w-3xl mx-auto px-6 pt-14 pb-24 fade-up">
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-2">
+      <span class="text-muted">//</span> materials
+    </p>
+    <h1 class="font-sans text-4xl sm:text-5xl font-black tracking-[-0.03em]" style="background:linear-gradient(95deg, var(--color-tools), var(--color-about)); -webkit-background-clip:text; background-clip:text; color:transparent">
+      DevOps tooling reference
+    </h1>
+    <p class="mt-4 text-muted leading-relaxed max-w-lg">
+      Working notes on the cloud and DevOps tools I use day to day. Click a card for the full service/component breakdown.
+    </p>
+
+    <div class="mt-12 space-y-12">
+      {categories.map((cat) => (
+        <div>
+          <p class="font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-4">{cat.label}</p>
+          <ul class="grid gap-4 sm:grid-cols-2">
+            {cat.tools.map((tool) => (
+              <li>
+                <a
+                  href={`/materials/${tool.slug}`}
+                  class="card-lift themed group flex h-full items-start gap-4 rounded-2xl border-2 border-line bg-surface p-5"
+                  style="--glow:var(--color-tools)"
+                >
+                  <TechLogo name={tool.logo} class="h-12 w-12 shrink-0" />
+                  <div class="min-w-0">
+                    <span class="font-extrabold text-ink group-hover:text-accent transition-colors">{tool.name}</span>
+                    <p class="text-sm text-muted mt-1 leading-relaxed">{tool.desc}</p>
+                    <p class="font-mono text-[10px] text-faint mt-2 group-hover:text-accent transition-colors">
+                      {tool.services.reduce((n, g) => n + g.items.length, 0)} services &rarr;
+                    </p>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
