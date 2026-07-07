@@ -1,0 +1,142 @@
+---
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+{slug === 'protocols' && (
+  <svg viewBox="0 0 800 260" class="w-full h-auto" role="img" aria-label="Network protocol stack, from application layer down to transport layer">
+    <defs>
+      <marker id="arrow-protocols" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--color-topics)" />
+      </marker>
+    </defs>
+
+    <rect x="20" y="10" width="760" height="70" rx="10" fill="var(--color-bg)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="40" y="35" fill="var(--color-ink)" font-size="15" font-weight="700" font-family="monospace">Application Layer</text>
+    <text x="40" y="60" fill="var(--color-muted)" font-size="13" font-family="monospace">HTTP/HTTPS &#183; WebSocket &#183; gRPC &#183; DNS &#183; SSH &#183; FTP/SFTP &#183; SMTP &#183; MQTT</text>
+
+    <line x1="400" y1="80" x2="400" y2="98" stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-protocols)" />
+
+    <rect x="20" y="100" width="760" height="50" rx="10" fill="var(--color-bg)" stroke="var(--color-topics)" stroke-width="2" />
+    <text x="40" y="122" fill="var(--color-ink)" font-size="15" font-weight="700" font-family="monospace">Security &#8212; TLS / SSL</text>
+    <text x="40" y="142" fill="var(--color-muted)" font-size="13" font-family="monospace">encrypts whatever protocol is riding on top</text>
+
+    <line x1="400" y1="150" x2="400" y2="168" stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-protocols)" />
+
+    <rect x="20" y="170" width="760" height="70" rx="10" fill="var(--color-bg)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="40" y="195" fill="var(--color-ink)" font-size="15" font-weight="700" font-family="monospace">Transport Layer</text>
+    <text x="40" y="220" fill="var(--color-muted)" font-size="13" font-family="monospace">TCP (reliable) &#183; UDP (fast, no guarantees) &#183; QUIC (HTTP/3)</text>
+  </svg>
+)}
+
+{slug === 'auth-models' && (
+  <svg viewBox="0 0 800 340" class="w-full h-auto" role="img" aria-label="OAuth-style authentication sequence between a user, client app, authorization server, and resource server">
+    <defs>
+      <marker id="arrow-auth" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--color-topics)" />
+      </marker>
+    </defs>
+
+    {['User', 'Client App', 'Authorization Server', 'Resource Server'].map((label, i) => {
+      const x = 80 + i * 213;
+      return (
+        <>
+          <rect x={x - 60} y="10" width="120" height="36" rx="8" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+          <text x={x} y="33" fill="var(--color-ink)" font-size="12" font-weight="700" font-family="monospace" text-anchor="middle">{label}</text>
+          <line x1={x} y1="46" x2={x} y2="320" stroke="var(--color-line)" stroke-width="1.5" stroke-dasharray="4 4" />
+        </>
+      );
+    })}
+
+    {[
+      { from: 0, to: 1, y: 75, label: '1. Log in' },
+      { from: 1, to: 2, y: 125, label: '2. Redirect for consent' },
+      { from: 2, to: 1, y: 175, label: '3. Authorization code' },
+      { from: 1, to: 2, y: 225, label: '4. Exchange code for token' },
+      { from: 2, to: 1, y: 275, label: '5. Access + refresh token' },
+    ].map((step) => {
+      const x1 = 80 + step.from * 213;
+      const x2 = 80 + step.to * 213;
+      return (
+        <>
+          <text x={(x1 + x2) / 2} y={step.y - 8} fill="var(--color-muted)" font-size="11.5" font-family="monospace" text-anchor="middle">{step.label}</text>
+          <line x1={x1} y1={step.y} x2={x2} y2={step.y} stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-auth)" />
+        </>
+      );
+    })}
+
+    <text x={80 + 1 * 213} y="315" fill="var(--color-muted)" font-size="11.5" font-family="monospace" text-anchor="middle">6. API call with token &#8594;</text>
+    <line x1={80 + 1 * 213} y1="320" x2={80 + 3 * 213} y2="320" stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-auth)" />
+  </svg>
+)}
+
+{slug === 'http-methods' && (
+  <svg viewBox="0 0 800 300" class="w-full h-auto" role="img" aria-label="HTTP methods mapped to CRUD operations between a client and a resource">
+    <defs>
+      <marker id="arrow-methods" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--color-topics)" />
+      </marker>
+    </defs>
+
+    <rect x="20" y="10" width="140" height="280" rx="10" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="90" y="155" fill="var(--color-ink)" font-size="15" font-weight="700" font-family="monospace" text-anchor="middle">Client</text>
+
+    <rect x="640" y="10" width="140" height="280" rx="10" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="710" y="145" fill="var(--color-ink)" font-size="15" font-weight="700" font-family="monospace" text-anchor="middle">Resource</text>
+    <text x="710" y="163" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">/users/123</text>
+
+    {[
+      { y: 40, method: 'GET', meaning: 'Read' },
+      { y: 90, method: 'POST', meaning: 'Create' },
+      { y: 140, method: 'PUT', meaning: 'Replace' },
+      { y: 190, method: 'PATCH', meaning: 'Partial update' },
+      { y: 240, method: 'DELETE', meaning: 'Delete' },
+    ].map((row) => (
+      <>
+        <line x1="165" y1={row.y} x2="635" y2={row.y} stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-methods)" />
+        <text x="400" y={row.y - 8} fill="var(--color-ink)" font-size="13" font-weight="700" font-family="monospace" text-anchor="middle">{row.method}</text>
+        <text x="400" y={row.y + 16} fill="var(--color-muted)" font-size="11.5" font-family="monospace" text-anchor="middle">{row.meaning}</text>
+      </>
+    ))}
+  </svg>
+)}
+
+{slug === 'certificates' && (
+  <svg viewBox="0 0 800 320" class="w-full h-auto" role="img" aria-label="Certificate chain of trust from root CA down to a server certificate presented to a client">
+    <defs>
+      <marker id="arrow-certs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--color-topics)" />
+      </marker>
+    </defs>
+
+    <rect x="40" y="20" width="280" height="60" rx="10" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="180" y="45" fill="var(--color-ink)" font-size="14" font-weight="700" font-family="monospace" text-anchor="middle">Root CA</text>
+    <text x="180" y="64" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">self-signed, pre-installed</text>
+
+    <line x1="180" y1="80" x2="180" y2="128" stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-certs)" />
+    <text x="200" y="108" fill="var(--color-muted)" font-size="11" font-family="monospace">signs</text>
+
+    <rect x="40" y="130" width="280" height="60" rx="10" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="180" y="155" fill="var(--color-ink)" font-size="14" font-weight="700" font-family="monospace" text-anchor="middle">Intermediate CA</text>
+    <text x="180" y="174" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">keeps root offline</text>
+
+    <line x1="180" y1="190" x2="180" y2="238" stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-certs)" />
+    <text x="200" y="218" fill="var(--color-muted)" font-size="11" font-family="monospace">signs</text>
+
+    <rect x="40" y="240" width="280" height="60" rx="10" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="180" y="265" fill="var(--color-ink)" font-size="14" font-weight="700" font-family="monospace" text-anchor="middle">Server Certificate</text>
+    <text x="180" y="284" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">leaf, issued for example.com</text>
+
+    <rect x="480" y="130" width="280" height="60" rx="10" fill="var(--color-surface)" stroke="var(--color-line)" stroke-width="2" />
+    <text x="620" y="155" fill="var(--color-ink)" font-size="14" font-weight="700" font-family="monospace" text-anchor="middle">Client / Browser</text>
+    <text x="620" y="174" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">verifies the chain</text>
+
+    <line x1="320" y1="270" x2="475" y2="180" stroke="var(--color-topics)" stroke-width="2" marker-end="url(#arrow-certs)" />
+    <text x="440" y="245" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">presents chain</text>
+
+    <line x1="480" y1="145" x2="325" y2="55" stroke="var(--color-muted)" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arrow-certs)" />
+    <text x="470" y="90" fill="var(--color-muted)" font-size="11" font-family="monospace" text-anchor="middle">trusts root (pre-installed)</text>
+  </svg>
+)}

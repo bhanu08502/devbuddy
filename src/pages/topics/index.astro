@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TopicDiagram from '../../components/TopicDiagram.astro';
+import { topicCategories } from '../../data/topics';
+---
+
+<Layout title="Topics | The Ops Desk" description="Quick reference on protocols, authentication models, and HTTP methods.">
+  <div class="max-w-5xl mx-auto px-6 pt-14 pb-24 fade-up">
+    <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-2">
+      <span class="text-muted">//</span> topics
+    </p>
+    <h1 class="font-sans text-4xl sm:text-5xl font-black tracking-[-0.03em]" style="background:linear-gradient(95deg, var(--color-topics), var(--color-about)); -webkit-background-clip:text; background-clip:text; color:transparent">
+      Concepts &amp; fundamentals
+    </h1>
+    <p class="mt-4 text-muted leading-relaxed max-w-lg">
+      Quick reference on the protocols, authentication models, and HTTP methods that show up in almost every system design conversation.
+    </p>
+
+    <div class="mt-10 flex flex-wrap gap-2 pb-6 border-b-2 border-line" role="tablist">
+      {topicCategories.map((cat, i) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-tab={i}
+          class="tab-btn shrink-0 whitespace-nowrap font-mono text-[11px] font-semibold tracking-[0.1em] uppercase px-4 py-2 rounded-full border-2 border-line text-faint transition-colors"
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-8">
+      {topicCategories.map((cat, i) => (
+        <div class="tab-panel" data-panel={i} hidden={i !== 0}>
+          <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-6 mb-8 overflow-x-auto" style="--glow:var(--color-topics)">
+            <TopicDiagram slug={cat.slug} />
+          </div>
+          <p class="text-sm text-muted mb-6">Click any card for a description.</p>
+          <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {cat.items.map((item) => (
+              <li>
+                <details class="group rounded-xl border border-line bg-surface open:border-[var(--color-topics)] transition-colors">
+                  <summary class="list-none cursor-pointer p-4 flex items-center justify-between gap-2">
+                    <span class="font-bold text-sm text-ink">{item.name}</span>
+                    <span class="shrink-0 text-faint transition-transform group-open:rotate-45 font-mono text-lg leading-none">+</span>
+                  </summary>
+                  <div class="px-4 pb-4">
+                    <p class="text-sm text-muted leading-relaxed">{item.desc}</p>
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <style>
+    .tab-btn[aria-selected="true"] {
+      color: var(--color-ink);
+      border-color: var(--color-topics);
+      background: color-mix(in srgb, var(--color-topics) 22%, transparent);
+    }
+    .tab-btn:not([aria-selected="true"]):hover {
+      color: var(--color-ink);
+      border-color: var(--color-topics);
+    }
+  </style>
+
+  <script>
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+    const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== tab.dataset.tab;
+        });
+      });
+    });
+  </script>
+</Layout>

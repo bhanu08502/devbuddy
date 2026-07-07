@@ -4,6 +4,7 @@ import ThemeToggle from './ThemeToggle.astro';
 const navItems = [
   { href: '/about', label: 'About', color: 'var(--color-about)' },
   { href: '/blog', label: 'Blog', color: 'var(--color-blog)' },
+  { href: '/topics', label: 'Topics', color: 'var(--color-topics)' },
   { href: '/materials', label: 'Materials', color: 'var(--color-tools)' },
 ];
 const currentPath = Astro.url.pathname;
@@ -13,7 +14,7 @@ const currentPath = Astro.url.pathname;
   <nav class="max-w-3xl mx-auto flex items-center justify-between px-6 py-4">
     <a href="/" class="group flex items-center gap-2 font-mono font-bold tracking-tight text-ink">
       <span class="flex h-6 w-6 items-center justify-center rounded-md bg-accent/15 text-accent text-sm">&gt;_</span>
-      <span>devbuddy</span>
+      <span>The Ops Desk</span>
     </a>
 
     <div class="flex items-center gap-3">

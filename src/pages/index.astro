@@ -24,12 +24,28 @@ const sections = [
     icon: 'M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2.25c-4.14 0-7.5 2.35-7.5 5.25v1.5h15v-1.5c0-2.9-3.36-5.25-7.5-5.25Z',
   },
   {
-    href: 'https://www.linkedin.com/in/kalijavedubhanu',
-    label: 'LinkedIn',
-    grad: 'linear-gradient(140deg, #0077b5, #005582)',
-    cmd: 'open linkedin',
-    description: 'View my LinkedIn profile and activity',
-    icon: 'M4 4h16v16H4V4Zm4.5 3.75h-2.25V16.5H8.5V7.75H6.25V6.25h2.25c1.24 0 1.75.82 1.75 1.75V8H11l.25-1.5H9.25V6.5c0-.22.06-.37.37-.37h1.12V4.5h-1.5C8.18 4.5 7.5 5.18 7.5 6.25v1.5H6.25V8h1.25V16.5h1.5V8h1.25v1.25h.03c.22-.4.7-.75 1.45-.75 1.5 0 1.75.99 1.75 2.28V16.5h1.5V9.75c0-1.95-.75-3-2.75-3-.93 0-1.62.5-1.88.93h-.03V6.5Z',
+    href: '/blog',
+    label: 'Blog',
+    grad: 'linear-gradient(140deg, #ff6a2b, #b8380f)',
+    cmd: 'ls blog/',
+    description: 'Notes on cloud architecture, DevOps, and platform engineering',
+    icon: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5ZM4 19a2 2 0 0 1 2-2h13',
+  },
+  {
+    href: '/topics',
+    label: 'Topics',
+    grad: 'linear-gradient(140deg, #16e0b4, #0a6f57)',
+    cmd: 'ls topics/',
+    description: 'Protocols, auth models, HTTP methods, and certificates',
+    icon: 'M12 3l9 5-9 5-9-5 9-5ZM3 13l9 5 9-5M3 17l9 5 9-5',
+  },
+  {
+    href: '/materials',
+    label: 'Materials',
+    grad: 'linear-gradient(140deg, #b98cff, #6a34c0)',
+    cmd: 'ls materials/',
+    description: 'Reference notes on the cloud and DevOps tools I use day to day',
+    icon: 'm14.7 6.3 3 3-8.4 8.4a2.121 2.121 0 0 1-3-3l8.4-8.4Zm4.5-1.5-1.5 1.5 1.5 1.5 1.664-1.664a1 1 0 0 0 0-1.414l-.086-.086a1 1 0 0 0-1.414 0Z',
   },
 ];
 
@@ -46,7 +62,7 @@ const contacts = [
     <div class="glow-panel themed rounded-2xl border-2 border-line bg-surface p-8 sm:p-12 flex flex-col gap-6" style="--glow:var(--color-accent)">
       <div class="relative z-10 font-mono text-[13px] leading-relaxed">
         <p class="text-muted">
-          <span style="color:var(--color-topics)">devbuddy</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> whoami
+          <span style="color:var(--color-topics)">opsdesk</span><span class="text-faint">@</span><span style="color:var(--color-about)">cloud</span><span class="text-faint">:</span><span style="color:var(--color-tools)">~</span><span class="text-faint">$</span> whoami
         </p>
         <p class="text-ink mt-1">
           Cloud &amp; DevOps Architect &middot; Delivery-focused<span class="cursor-blink ml-0.5 inline-block h-[1em] w-[7px] align-[-2px]" style="background:var(--color-accent)"></span>

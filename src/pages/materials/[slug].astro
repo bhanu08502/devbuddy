@@ -17,7 +17,7 @@ const isCloud = categoryLabel === 'Cloud Platforms';
 const isKubernetes = tool.slug === 'kubernetes';
 ---
 
-<Layout title={`${tool.name} | Materials | DevBuddy`} description={tool.desc}>
+<Layout title={`${tool.name} | Materials | The Ops Desk`} description={tool.desc}>
   <div class="max-w-3xl mx-auto px-6 pt-14 pb-24 fade-up">
     <a href="/materials" class="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted hover:text-accent transition-colors">
       <span aria-hidden="true">&larr;</span> materials
@@ -32,22 +32,24 @@ const isKubernetes = tool.slug === 'kubernetes';
     </div>
     <p class="mt-4 text-muted leading-relaxed max-w-xl">{tool.desc}</p>
 
-    <div class="mt-10 grid gap-6 sm:grid-cols-2">
-      <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
-        <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">Key concepts</p>
-        <ul class="space-y-1.5">
-          {tool.concepts.map((c: string) => (
-            <li class="text-sm text-muted leading-relaxed flex gap-2">
-              <span style="color:var(--color-tools)">&bull;</span> {c}
-            </li>
-          ))}
-        </ul>
+    {!isCloud && (
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
+          <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">Key concepts</p>
+          <ul class="space-y-1.5">
+            {tool.concepts.map((c: string) => (
+              <li class="text-sm text-muted leading-relaxed flex gap-2">
+                <span style="color:var(--color-tools)">&bull;</span> {c}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
+          <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">Common commands</p>
+          <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto leading-relaxed">{tool.commands.join('\n')}</pre>
+        </div>
       </div>
-      <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
-        <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">Common commands</p>
-        <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto leading-relaxed">{tool.commands.join('\n')}</pre>
-      </div>
-    </div>
+    )}
 
     <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-10 mb-4">
       <span class="text-muted">//</span> installation
@@ -66,13 +68,13 @@ const isKubernetes = tool.slug === 'kubernetes';
     <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mt-12 mb-4">
       <span class="text-muted">//</span> services &amp; components ({tool.services.reduce((n: number, g: { items: unknown[] }) => n + g.items.length, 0)})
     </p>
-    {isKubernetes && <p class="text-sm text-muted mb-6">Click any card for a usage example.</p>}
+    {(isKubernetes || isCloud) && <p class="text-sm text-muted mb-6">Click any card for a description{isKubernetes && ' and example command'}.</p>}
 
     <div class="space-y-10">
       {tool.services.map((group: { label: string; items: { name: string; desc: string; example: string }[] }) => (
         <div>
           <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">{group.label}</p>
-          <ul class="grid gap-3 sm:grid-cols-2">
+          <ul class={`grid gap-3 ${isCloud ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'}`}>
             {group.items.map((s) => (
               isKubernetes ? (
                 <li>
@@ -87,6 +89,18 @@ const isKubernetes = tool.slug === 'kubernetes';
                     <div class="px-4 pb-4">
                       <p class="font-mono text-[10px] font-semibold tracking-[0.1em] uppercase text-faint mb-1.5">Example</p>
                       <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto whitespace-pre leading-relaxed">{s.example}</pre>
+                    </div>
+                  </details>
+                </li>
+              ) : isCloud ? (
+                <li>
+                  <details class="group rounded-xl border border-line bg-surface open:border-[var(--color-tools)] transition-colors">
+                    <summary class="list-none cursor-pointer p-4 flex items-center justify-between gap-2">
+                      <span class="font-bold text-sm text-ink">{s.name}</span>
+                      <span class="shrink-0 text-faint transition-transform group-open:rotate-45 font-mono text-lg leading-none">+</span>
+                    </summary>
+                    <div class="px-4 pb-4">
+                      <p class="text-sm text-muted leading-relaxed">{s.desc}</p>
                     </div>
                   </details>
                 </li>
@@ -110,8 +124,16 @@ const isKubernetes = tool.slug === 'kubernetes';
         <div class="space-y-6">
           {tool.services.map((group: { label: string; items: { name: string; desc: string; example: string }[] }) => (
             <div class="card-lift themed rounded-2xl border-2 border-line bg-surface p-5" style="--glow:var(--color-tools)">
-              <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-3">{group.label}</p>
-              <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto whitespace-pre leading-relaxed">{group.items.map((s) => `# ${s.name}\n${s.example}`).join('\n\n')}</pre>
+              <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint mb-4">{group.label}</p>
+              <div class="grid gap-4 sm:grid-cols-2">
+                {group.items.map((s) => (
+                  <div>
+                    <p class="font-bold text-sm text-ink">{s.name}</p>
+                    <p class="text-sm text-muted mt-1 mb-2 leading-relaxed">{s.desc}</p>
+                    <pre class="font-mono text-[11px] text-ink bg-bg border border-line rounded-lg p-3 overflow-x-auto whitespace-pre leading-relaxed">{s.example}</pre>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

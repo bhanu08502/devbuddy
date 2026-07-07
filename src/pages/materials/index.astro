@@ -4,8 +4,8 @@ import TechLogo from '../../components/TechLogo.astro';
 import { categories } from '../../data/materials';
 ---
 
-<Layout title="Materials | DevBuddy" description="Reference notes on the cloud and DevOps tools I use day to day.">
-  <div class="max-w-3xl mx-auto px-6 pt-14 pb-24 fade-up">
+<Layout title="Materials | The Ops Desk" description="Reference notes on the cloud and DevOps tools I use day to day.">
+  <div class="max-w-5xl mx-auto px-6 pt-14 pb-24 fade-up">
     <p class="flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-2">
       <span class="text-muted">//</span> materials
     </p>
@@ -16,11 +16,24 @@ import { categories } from '../../data/materials';
       Working notes on the cloud and DevOps tools I use day to day. Click a card for the full service/component breakdown.
     </p>
 
-    <div class="mt-12 space-y-12">
-      {categories.map((cat) => (
-        <div>
-          <p class="font-mono text-[11px] font-semibold tracking-[0.2em] uppercase text-faint mb-4">{cat.label}</p>
-          <ul class="grid gap-4 sm:grid-cols-2">
+    <div class="mt-10 flex flex-wrap gap-2 pb-6 border-b-2 border-line" role="tablist">
+      {categories.map((cat, i) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-tab={i}
+          class="tab-btn shrink-0 whitespace-nowrap font-mono text-[11px] font-semibold tracking-[0.1em] uppercase px-4 py-2 rounded-full border-2 border-line text-faint transition-colors"
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-8">
+      {categories.map((cat, i) => (
+        <div class="tab-panel" data-panel={i} hidden={i !== 0}>
+          <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {cat.tools.map((tool) => (
               <li>
                 <a
@@ -44,4 +57,32 @@ import { categories } from '../../data/materials';
       ))}
     </div>
   </div>
+
+  <style>
+    .tab-btn[aria-selected="true"] {
+      color: var(--color-ink);
+      border-color: var(--color-tools);
+      background: color-mix(in srgb, var(--color-tools) 22%, transparent);
+    }
+    .tab-btn:not([aria-selected="true"]):hover {
+      color: var(--color-ink);
+      border-color: var(--color-tools);
+    }
+  </style>
+
+  <script>
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+    const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== tab.dataset.tab;
+        });
+      });
+    });
+  </script>
 </Layout>
+
