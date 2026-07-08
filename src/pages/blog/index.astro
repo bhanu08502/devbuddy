@@ -6,6 +6,10 @@ const allPosts = await getCollection('blog', ({ data }) => import.meta.env.PROD 
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const dateFormat = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' });
+
+const categoryOrder = ['DevOps', 'Cloud', 'AI', 'Kubernetes', 'Security', 'Other'];
+const usedCategories = categoryOrder.filter((cat) => posts.some((post) => post.data.category === cat));
+const tabs = ['All', ...usedCategories];
 ---
 
 <Layout title="Blog | The Ops Desk" description="Notes on cloud architecture, DevOps, and platform engineering.">
@@ -20,22 +24,69 @@ const dateFormat = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'num
       Cloud architecture, DevOps, and platform engineering — things I've shared on LinkedIn, collected here.
     </p>
 
-    <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {posts.map((post) => (
-        <li class="card-lift themed rounded-2xl border-2 border-line bg-surface overflow-hidden h-full" style="--glow:var(--color-blog)">
-          <a href={`/blog/${post.id}`} class="flex h-full flex-col">
-            <div class="p-6 flex flex-col flex-1">
-              <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint">{post.data.category}</p>
-              <h2 class="font-extrabold text-lg text-ink mt-1">{post.data.title}</h2>
-              <p class="font-mono text-[11px] text-muted mt-2">{dateFormat.format(post.data.date)}</p>
-              <p class="text-sm text-muted mt-4 leading-relaxed">{post.data.description}</p>
-              <span class="inline-flex items-center gap-1.5 mt-auto pt-4 font-mono text-[11px] text-muted hover:text-accent transition-colors">
-                read more <span aria-hidden="true">&rarr;</span>
-              </span>
-            </div>
-          </a>
-        </li>
+    <div class="mt-10 flex flex-wrap gap-2 pb-6 border-b-2 border-line" role="tablist">
+      {tabs.map((tab, i) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-tab={tab}
+          class="tab-btn shrink-0 whitespace-nowrap font-mono text-[11px] font-semibold tracking-[0.1em] uppercase px-4 py-2 rounded-full border-2 border-line text-faint transition-colors"
+        >
+          {tab}
+        </button>
       ))}
-    </ul>
+    </div>
+
+    <div class="mt-8">
+      {tabs.map((tab, i) => (
+        <div class="tab-panel" data-panel={tab} hidden={i !== 0}>
+          <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.filter((post) => tab === 'All' || post.data.category === tab).map((post) => (
+              <li class="card-lift themed rounded-2xl border-2 border-line bg-surface overflow-hidden h-full" style="--glow:var(--color-blog)">
+                <a href={`/blog/${post.id}`} class="flex h-full flex-col">
+                  <div class="p-6 flex flex-col flex-1">
+                    <p class="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-faint">{post.data.category}</p>
+                    <h2 class="font-extrabold text-lg text-ink mt-1">{post.data.title}</h2>
+                    <p class="font-mono text-[11px] text-muted mt-2">{dateFormat.format(post.data.date)}</p>
+                    <p class="text-sm text-muted mt-4 leading-relaxed">{post.data.description}</p>
+                    <span class="inline-flex items-center gap-1.5 mt-auto pt-4 font-mono text-[11px] text-muted hover:text-accent transition-colors">
+                      read more <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
   </div>
+
+  <style>
+    .tab-btn[aria-selected="true"] {
+      color: var(--color-ink);
+      border-color: var(--color-blog);
+      background: color-mix(in srgb, var(--color-blog) 22%, transparent);
+    }
+    .tab-btn:not([aria-selected="true"]):hover {
+      color: var(--color-ink);
+      border-color: var(--color-blog);
+    }
+  </style>
+
+  <script>
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+    const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== tab.dataset.tab;
+        });
+      });
+    });
+  </script>
 </Layout>
